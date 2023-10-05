@@ -43,6 +43,36 @@ rust_library_host {
         "libder",
         "libspki",
     ],
+}
+
+rust_library_rlib {
+    name: "libpkcs8_nostd",
+    crate_name: "pkcs8",
+    cargo_env_compat: true,
+    cargo_pkg_version: "0.9.0",
+    srcs: ["src/lib.rs"],
+    edition: "2021",
+    features: ["alloc"],
+    rustlibs: [
+        "libder_nostd",
+        "libspki_nostd",
+    ],
+    apex_available: [
+        "//apex_available:platform",
+        "com.android.virt",
+    ],
+    prefer_rlib: true,
+    no_stdlibs: true,
+    stdlibs: [
+        "libcompiler_builtins.rust_sysroot",
+        "libcore.rust_sysroot",
+    ],
     product_available: true,
     vendor_available: true,
+    visibility: [
+         "//external/rust/crates/pkcs1:__subpackages__",
+         "//external/rust/crates/sec1:__subpackages__",
+         "//system/keymint:__subpackages__",
+    ]
+    ,
 }
